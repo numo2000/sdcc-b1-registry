@@ -1,0 +1,58 @@
+# Cluster di 5 nodi registry, ciascuno nato dalla STESSA immagine
+# (build: .), differenziati solo dal proprio config.yaml montato via bind
+# mount (vedi configs/node1..5.yaml). Docker Compose crea
+# automaticamente una rete bridge condivisa e vi collega tutti i servizi
+# definiti qui: i nodi si raggiungono tra loro per NOME DEL SERVIZIO
+# (risoluzione DNS interna alla rete bridge, es. "registry-node-2:8000"
+# nei bootstrap.seeds di ogni configs/nodeN.yaml).
+#
+# Generato da generate-compose.sh - non modificare a mano, rigenerare con
+# ./generate-compose.sh 5 se serve un numero diverso di nodi.
+#
+# Nota sulla restart policy: nessuna impostata (default "no") di proposito
+# - un nodo "ucciso" con `docker kill` deve restare morto finche' non lo
+# riavvii tu esplicitamente, cosi' si puo' osservare la finestra di
+# SUSPECTED/DEAD (timeout_suspect_ms/timeout_dead_ms) durante i test di
+# crash invece di vederlo ripartire subito da solo.
+
+services:
+
+  registry-node-1:
+    build: .
+    container_name: registry-node-1
+    volumes:
+      - ./configs/node1.yaml:/app/configs/config.yaml:ro
+    ports:
+      - "8081:7000"
+
+  registry-node-2:
+    build: .
+    container_name: registry-node-2
+    volumes:
+      - ./configs/node2.yaml:/app/configs/config.yaml:ro
+    ports:
+      - "8082:7000"
+
+  registry-node-3:
+    build: .
+    container_name: registry-node-3
+    volumes:
+      - ./configs/node3.yaml:/app/configs/config.yaml:ro
+    ports:
+      - "8083:7000"
+
+  registry-node-4:
+    build: .
+    container_name: registry-node-4
+    volumes:
+      - ./configs/node4.yaml:/app/configs/config.yaml:ro
+    ports:
+      - "8084:7000"
+
+  registry-node-5:
+    build: .
+    container_name: registry-node-5
+    volumes:
+      - ./configs/node5.yaml:/app/configs/config.yaml:ro
+    ports:
+      - "8085:7000"

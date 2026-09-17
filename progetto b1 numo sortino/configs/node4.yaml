@@ -1,0 +1,26 @@
+# Configurazione del nodo 4 nel cluster a 5 nodi (generato da generate-configs.sh).
+
+node:
+  id: "registry-node-4:8000"
+  listen_port: 7000
+  grpc_port: 8000
+
+bootstrap:
+  seeds:
+    - "registry-node-1:8000"
+    - "registry-node-2:8000"
+    - "registry-node-3:8000"
+    - "registry-node-5:8000"
+
+gossip:
+  round_interval_ms: 1030
+  peers_per_round: 2
+  dead_check_every_n_rounds: 10
+
+failure_detection:
+  timeout_suspect_ms: 3000
+  timeout_dead_ms: 10000
+
+service_health:
+  check_interval_ms: 5000
+  check_timeout_ms: 500

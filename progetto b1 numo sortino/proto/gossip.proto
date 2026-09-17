@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package gossip;
+
+option go_package = "sdcc-b1-registry/internal/gossippb";
+
+// Gossip e' il servizio di anti-entropy push-pull tra nodi.
+service Gossip {
+  rpc Exchange(ExchangeRequest) returns (ExchangeResponse);
+}
+
+// ServiceEntry e' l'equivalente sul filo di registry.ServiceEntry.
+message ServiceEntry {
+  string service_id = 1;
+  string endpoint = 2;
+  uint64 counter = 3;
+  string owner_node_id = 4;
+  string status = 5;
+}
+
+// PeerClaim e' l'equivalente sul filo di membership.PeerInfo: una
+// dichiarazione di stato su un peer, versionata con lo stesso schema
+// (counter, owner_node_id) di ServiceEntry, per poter confrontare in modo
+// affidabile dichiarazioni discordanti ricevute da nodi diversi
+// (last-write-wins) senza mai confrontare orologi fisici.
+message PeerClaim {
+  string address = 1;
+  uint64 counter = 2;
+  string owner_node_id = 3;
+  string state = 4;
+}
+
+// ExchangeRequest e' il "push": lo stato locale del nodo che inizia lo scambio.
+message ExchangeRequest {
+  string sender_addr = 1;
+  repeated ServiceEntry entries = 2;
+  repeated PeerClaim peer_claims = 3;
+}
+
+// ExchangeResponse e' il "pull": lo stato locale del nodo che risponde.
+message ExchangeResponse {
+  repeated ServiceEntry entries = 1;
+  repeated PeerClaim peer_claims = 2;
+}

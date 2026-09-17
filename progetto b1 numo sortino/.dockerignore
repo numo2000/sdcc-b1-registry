@@ -1,0 +1,16 @@
+# File esclusi dal build context: riducono la dimensione inviata al
+# daemon Docker e le invalidazioni di cache inutili (es. modificare
+# ARCHITETTURA.md non deve forzare la ricostruzione dei layer Go).
+.git
+*.zip
+*.pdf
+
+ARCHITETTURA.md
+README.md
+ROADMAP.md
+TEORIA_RIPASSO.md
+
+# configs/ NON va incorporato nell'immagine: ogni nodo riceve il proprio
+# config.yaml via bind mount a runtime (docker-compose.yml), non al
+# momento della build - vedi Dockerfile.
+configs/

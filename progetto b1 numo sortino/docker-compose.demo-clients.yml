@@ -1,0 +1,11 @@
+# Aggiunge un container "demo-clients" alla stessa rete del cluster
+# registry, con 10 porte TCP in ascolto reale (vedi demo/fake-clients) da
+# usare come endpoint per i servizi fasulli registrati con
+# demo/random-register.sh - permette al controllo di raggiungibilita' del
+# registry di marcarli davvero ACTIVE, non solo SUSPECTED.
+#
+# Uso: docker compose -f docker-compose.yml -f docker-compose.demo-clients.yml up -d
+services:
+  demo-clients:
+    build: ./demo/fake-clients
+    container_name: demo-clients

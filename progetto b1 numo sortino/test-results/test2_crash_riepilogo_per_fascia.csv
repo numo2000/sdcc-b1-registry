@@ -1,0 +1,5 @@
+fraction;label;n_trials;survived;survival_rate_pct;rescued_by_push_only;rescued_by_pull_only;rescued_by_both;survived_neither_detected_boundary_timing;lost
+0.08333;1/12 round;20;7;35;0;3;1;3;13
+0.1;1/10 round;20;10;50;0;7;0;3;10
+0.125;1/8 round;20;14;70;0;12;0;2;6
+0.25;1/4 round;20;19;95;0;6;12;1;1
