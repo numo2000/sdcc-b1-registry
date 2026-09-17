@@ -2,9 +2,6 @@
 
 Service registry decentralizzato e fault-tolerant, progetto B1 del corso Sistemi Distribuiti e Cloud Computing (Tor Vergata, A.A. 2025/26).
 
-## Documentazione di progetto
-- [ARCHITETTURA.md](ARCHITETTURA.md) — scelte architetturali e design
-
 ## Struttura del progetto
 ```
 cmd/registry-node/    entrypoint del binario del nodo
